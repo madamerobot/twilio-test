@@ -10,6 +10,9 @@ const accountSid = process.env.TWILIO_ACCOUNT_ID; // Your Account SID from www.t
 const authToken = process.env.TWILIO_AUTH_TOKEN; // Your Auth Token from www.twilio.com/console
 const client = new twilio(accountSid, authToken);
 
+let counter = 0
+const limit = 1
+
 app.use(express.static('dist'));
 
 function sendSMS(number) {
@@ -24,12 +27,11 @@ function sendSMS(number) {
 app.get('/api/sms/:number', (req, res) => {
   const number = req.params.number
   let success = false
-  console.log(number.length)
-  console.log(number[0])
 
-  if (number.length > 11 && number[0] === '+') {
+  if (number.length > 11 && number[0] === '+' && counter < 1) {
     sendSMS(number);
     success = true
+    counter = counter + 1
   }
   if (success) {
     res.send('Message sent successfully');

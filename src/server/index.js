@@ -1,11 +1,13 @@
+require('dotenv').load();
+
 // Express Config
 const express = require('express');
 const app = express();
 
 // Twilio Config
 const twilio = require('twilio');
-const accountSid = 'ACbf16b1d900d9f942b1192f3ff0cad910'; // Your Account SID from www.twilio.com/console
-const authToken = 'a77f6a878775488919f6fce0f50caa4f'; // Your Auth Token from www.twilio.com/console
+const accountSid = process.env.TWILIO_ACCOUNT_ID; // Your Account SID from www.twilio.com/console
+const authToken = process.env.TWILIO_AUTH_TOKEN; // Your Auth Token from www.twilio.com/console
 const client = new twilio(accountSid, authToken);
 
 app.use(express.static('dist'));
